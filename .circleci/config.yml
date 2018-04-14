@@ -1,0 +1,47 @@
+version: 2
+jobs:
+  job1:
+    docker:
+      - image: circleci/python:3.6.1
+
+    steps:
+      - run:
+          name: echo1
+          command: echo fuwafuwa
+
+  job2:
+    docker:
+      - image: circleci/python:3.6.1
+
+    steps:
+      - run:
+          name: echo2
+          command: echo mochimochi
+
+
+  job3:
+    docker:
+      - image: circleci/python:3.6.1
+
+    steps:
+      - run:
+          name: echo3
+          command: echo pikapika
+
+workflows:
+  version: 2
+  test-jobs:
+    jobs:
+      - job1
+      - job2:
+          requires:
+            - job1
+          filters:
+            branches:
+              only: develop
+      - job3:
+          requires:
+            - job1
+          filters:
+            branches:
+              only: master
